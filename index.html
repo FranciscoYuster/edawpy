@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Prices - Análisis Exploratorio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #0042FF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        code {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 4px;
+            font-family: Consolas, "Courier New", monospace;
+        }
+        pre {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        h1, h2, h3 {
+            color: #0042FF;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Análisis Exploratorio - House Prices</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Introducción</h2>
+            <p>Este repositorio está hecho con el fin de entrenar la exploración de datos, utilizando como guía los cuadernos de Kaggle <a href="https://www.kaggle.com/code/pmarcelino/comprehensive-data-exploration-with-python/notebook#4.-Missing-data">Comprehensive data exploration with Python</a> y <a href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques">House Prices - Advanced Regression Techniques</a>. Además, he traducido el contenido para practicar mi inglés.</p>
+            <img src="Images/Banner.png" alt="Banner del proyecto">
+        </section>
+
+        <section>
+            <h2>Tarea</h2>
+            <p>Nuestra tarea es predecir el precio de venta de cada casa. Para cada <code>Id</code> en el conjunto de prueba, debes predecir el valor de la variable <code>SalePrice</code>.</p>
+        </section>
+
+        <section>
+            <h2>Instalación</h2>
+            <p>Para realizar el análisis, es necesario instalar la API de Kaggle. Si no la tienes instalada, ejecuta:</p>
+            <pre><code>pip install kaggle</code></pre>
+            <p>Después, descarga el archivo <code>kaggle.json</code> desde la configuración de tu cuenta de Kaggle y colócalo en la carpeta <code>.kaggle</code>:</p>
+            <pre><code>move ~/downloads/kaggle.json ~/.kaggle/</code></pre>
+            <p>Descarga el conjunto de datos con:</p>
+            <pre><code>kaggle competitions download -c house-prices-advanced-regression-techniques</code></pre>
+            <p>Mueve y extrae el archivo ZIP:</p>
+            <pre><code>move ~/downloads/house-prices-advanced-regression-techniques.zip ~/onedrive/Data/
+Expand-Archive -Path ~/onedrive/Data/house-prices-advanced-regression-techniques.zip -DestinationPath ~/onedrive/Data/</code></pre>
+        </section>
+
+        <section>
+            <h2>Resultados</h2>
+            <p>Al extraer los archivos, obtendremos:</p>
+            <pre><code>├── Data/
+│   ├── train.csv
+│   ├── test.csv
+│   ├── sample-submission.csv
+│   └── data_description.txt</code></pre>
+        </section>
+
+        <section>
+            <h2>Análisis Exploratorio</h2>
+            <p>Comenzamos importando las bibliotecas necesarias y leyendo el conjunto de datos:</p>
+            <pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+from scipy.stats import norm
+from sklearn.preprocessing import StandardScaler
+from scipy import stats
+import warnings
+warnings.filterwarnings('ignore')
+
+df_train = pd.read_csv('~/onedrive/Data/train.csv')
+print(df_train.columns)</code></pre>
+            <p>Esto nos permite identificar las variables más influyentes en <code>SalePrice</code>. Utilizando un mapa de calor, seleccionamos las más relevantes.</p>
+            <img src="Images/CorrSP.png" alt="Mapa de calor">
+        </section>
+
+        <section>
+            <h2>Visualización de Variables</h2>
+            <p>Utilizamos gráficos para explorar la relación entre las variables y el precio de venta:</p>
+            <h3>Área Habitable</h3>
+            <img src="Images/grlivarea.png" alt="Área habitable vs Precio">
+            <h3>Calidad General</h3>
+            <img src="Images/OverallQual.png" alt="Calidad general vs Precio">
+        </section>
+
+        <section>
+            <h2>Transformaciones</h2>
+            <p>Realizamos transformaciones logarítmicas para normalizar variables como <code>SalePrice</code> y <code>GrLivArea</code>:</p>
+            <img src="Images/SalePrice6.png" alt="Transformación de SalePrice">
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 - Proyecto de Análisis Exploratorio</p>
+    </footer>
+</body>
+</html>
