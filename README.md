@@ -218,7 +218,7 @@ plt.show()
 ````
 
 #### Así queda la grafica
-<img src="Images/grlivarea.png" alt="Distribución de SalePrice" width="600" height="400">
+<img src="Images/GrLivarea.png" alt="Distribución de SalePrice" width="600" height="400">
 
 
 #### Podemos ver una clara relación lineal entre el área habitable y el precio de venta. A medida que el área habitable aumenta, el precio de venta también tiende a aumentar. Esto confirma la hipótesis de que las casas más grandes generalmente se venden a precios más altos
