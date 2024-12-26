@@ -16,7 +16,6 @@
         header {
             background-color: #0042FF;
             color: white;
-            padding: 20px;
             text-align: center;
         }
         main {
@@ -28,10 +27,9 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         img {
-            max-width: 100%;
+            width: 100%;
             height: auto;
-            display: block;
-            margin: 20px auto;
+            display: flex;
         }
         code {
             background: #f9f9f9;
@@ -54,8 +52,12 @@
             font-size: 0.9em;
             color: #666;
         }
-        h1, h2, h3 {
-            color: #0042FF;
+        h1, h2{
+            color: #0044ff;
+        }
+
+        h4,h3,p {
+            color: black;
         }
         ul {
             margin: 10px 0;
@@ -65,47 +67,52 @@
 </head>
 <body>
     <header>
-        <h1>Análisis Exploratorio - House Prices</h1>
+        <img src="Images/Banner.png" alt="Banner del proyecto">
     </header>
     <main>
         <section>
-            <h2>Introducción</h2>
-            <p>Este repositorio está hecho con el fin de entrenar la exploración de datos, utilizando como guía los cuadernos de Kaggle <a href="https://www.kaggle.com/code/pmarcelino/comprehensive-data-exploration-with-python/notebook#4.-Missing-data">Comprehensive data exploration with Python</a> y <a href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques">House Prices - Advanced Regression Techniques</a>. Además, he traducido el contenido para practicar mi inglés.</p>
-            <img src="Images/Banner.png" alt="Banner del proyecto">
-        </section>
+            <h2>Este repositorio esta hecho con el fin de entrenar la exploración de datos, utilicé como guía el cuaderno de kaggle <a href="https://www.kaggle.com/code/pmarcelino/comprehensive-data-exploration-with-python/notebook#4.-Missing-data">Comprehensive data exploration with Python</a> y <a href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques">House Prices - Advanced Regression Techniques</a>. Y también de paso traducirlo para practicar mi ingles jeje</h2>
+            
+     
 
-        <section>
-            <h2>Tarea</h2>
-            <p>Nuestra tarea es predecir el precio de venta de cada casa. Para cada <code>Id</code> en el conjunto de prueba, debes predecir el valor de la variable <code>SalePrice</code>.</p>
-        </section>
+       
+            <h3>Nuestra tarea es predecir el precio de venta de cada casa. Para cada Id en el conjunto de prueba, debes predecir el valor de la variable SalePrice.</h3>
+   
 
-        <section>
-            <h2>Instalación</h2>
-            <p>Para realizar el análisis, es necesario instalar la API de Kaggle. Si no la tienes instalada, ejecuta:</p>
+    
+            <h4>Para hacer el análisis, es necesario tener instalada la API de kaggle, en caso de no tenerla, la instalamos desde la terminal con:</h4>
             <pre><code>pip install kaggle</code></pre>
-            <p>Después, descarga el archivo <code>kaggle.json</code> desde la configuración de tu cuenta de Kaggle y colócalo en la carpeta <code>.kaggle</code>:</p>
+
+            <h4>Ahora para poder descargar los datos, debemos descargar el archivo kaggle.json, desde la configuración de nuestra cuenta de Kaggle, y una vez descargado lo movemos hacia la carpeta .kaggle</h4>
             <pre><code>move ~/downloads/kaggle.json ~/.kaggle/</code></pre>
-            <p>Descarga el conjunto de datos con:</p>
+
+            <h4>Ya con el archivo en la carpeta, descargamos el dataset</h4>
             <pre><code>kaggle competitions download -c house-prices-advanced-regression-techniques</code></pre>
-            <p>Mueve y extrae el archivo ZIP:</p>
-            <pre><code>move ~/downloads/house-prices-advanced-regression-techniques.zip ~/onedrive/Data/
-Expand-Archive -Path ~/onedrive/Data/house-prices-advanced-regression-techniques.zip -DestinationPath ~/onedrive/Data/</code></pre>
-        </section>
+            
+            <h4>Ya con el archivo en la carpeta, descargamos el dataset</h4>
+            <pre><code>kaggle competitions download -c house-prices-advanced-regression-techniques</code></pre>
+            
+            <h4>Movemos el archivo ZIP a nuestra carpeta deseada, en mi caso estoy guardando en mi carpeta Onedrive. Si quieres una ubicación distinta solo tienes que reemplazar la dirección por la que quieras.</h4>
+            <pre><code>move ~/downloads/house-prices-advanced-regression-techniques.zip ~/onedrive/Data/</code></pre>
+            
+            <h4>Y extraemos el archivo ZIP,</h4>
+            <pre><code>Expand-Archive -Path ~/onedrive/Data/house-prices-advanced-regression-techniques.zip -DestinationPath ~/onedrive/Data/ 
+# Eliminar el archivo zip después de la extracción</code></pre>
 
-        <section>
-            <h2>Resultados</h2>
-            <p>Al extraer los archivos, obtendremos:</p>
-            <pre><code>├── Data/
-│   ├── train.csv
-│   ├── test.csv
-│   ├── sample-submission.csv
-│   └── data_description.txt</code></pre>
-        </section>
+      
 
-        <section>
-            <h2>Análisis Exploratorio</h2>
-            <p>Comenzamos importando las bibliotecas necesarias y leyendo el conjunto de datos:</p>
-            <pre><code>import pandas as pd
+      
+            <h4>Se extraerán los siguientes archivos</h4>
+<pre><code>├── Data/
+│   ├── train.csv  # Archivo CSV extraído con los datos de entrenamiento
+│   ├── test.csv   # Archivo CSV extraído con los datos de prueba
+│   ├── sample-submission.csv  # Ejemplo de archivo de envío
+│   └── data_description.txt  # Descripción de los datos</code></pre>
+
+
+  
+            <h4>Ya extraídos los archivos, leemos el archivo CSV para tener los datos, para esto importaremos todo lo importante</h4>
+<pre><code>import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
@@ -113,31 +120,173 @@ from scipy.stats import norm
 from sklearn.preprocessing import StandardScaler
 from scipy import stats
 import warnings
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignore')</code></pre>
 
-df_train = pd.read_csv('~/onedrive/Data/train.csv')
-print(df_train.columns)</code></pre>
-            <p>Esto nos permite identificar las variables más influyentes en <code>SalePrice</code>. Utilizando un mapa de calor, seleccionamos las más relevantes.</p>
+
+<h4>Ahora si, leemos el archivo y mostramos las columnas</h4>
+<pre><code>df_train = pd.read_csv('~/onedrive/Data/train.csv') 
+print(df_train.coumns)</code></pre>
+
+<h4>Esto nos muestra todas las columnas del dataset, ya que, con esto podemos hacernos una idea de cuales son las columnas que tienen mayor impacto en el precio de venta</h4>
+<pre><code>Index(['Id', 'MSSubClass', 'MSZoning', 'LotFrontage', 'LotÁrea', 'Street',
+'Alley', 'LotShape', 'LandContour', 'Utilities', 'LotConfig',
+'LandSlope', 'Neighborhood', 'Condition1', 'Condition2', 'BldgType',
+'HouseStyle', 'OverallQual', 'OverallCond', 'YearBuilt', 'YearRemodAdd',
+'RoofStyle', 'RoofMatl', 'Exterior1st', 'Exterior2nd', 'másVnrType',
+'másVnrÁrea', 'ExterQual', 'ExterCond', 'Foundation', 'BsmtQual',
+'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinSF1',
+'BsmtFinType2', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', 'Heating',
+'HeatingQC', 'CentralAir', 'Electrical', '1stFlrSF', '2ndFlrSF',
+'LowQualFinSF', 'GrLivÁrea', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath',
+'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr', 'KitchenQual',
+'TotRmsAbvGrd', 'Functional', 'Fireplaces', 'FireplaceQu', 'GarageType',
+'GarageYrBlt', 'GarageFinish', 'GarageCars', 'GarageÁrea', 'GarageQual',
+'GarageCond', 'PavedDrive', 'WoodDeckSF', 'OpenPorchSF',
+'EnclosedPorch', '3SsnPorch', 'ScreenPorch', 'PoolÁrea', 'PoolQC',
+'Fence', 'MiscFeature', 'MiscVal', 'MoSold', 'YrSold', 'SaleType',
+'SaleCondition', 'SalePrice'],
+dtype='object')</code></pre>
+
+<h4>Para conocer las variables que más impacto tienen en el precio de venta, recomiendo leer el archivo de texto de descripción de las variables, esta categorización e imporatncia se vuelve más intuitiva después de algunos comandos, como:</h4>
+<pre><code>corrmat=df_train.corr()
+corrmat["SalePrice"].sort_values(ascendig=False).head(10)</code></pre>
+<pre><code>SalePrice       1.000000
+OverallQual     0.790982
+GrLivArea       0.708624
+GarageCars      0.640409
+GarageArea      0.623431
+TotalBsmtSF     0.613581
+1stFlrSF        0.605852
+FullBath        0.560664
+TotRmsAbvGrd    0.533723
+YearBuilt       0.522897</code></pre>
+
+
+<h4>Teniendo en cuenta esta información, armaremos un mapa de calor de una matriz de correlación pero esta vez para observar la correlación de todas las variables, esto con el fin de evaluar la selección de variables.</h4>
+<pre><code># Calculamos la matriz de correlacion con las variables de cols transponiendo primero los datos para que cada variable sea una fila
+cm = np.corrcoef(df_train[cols].values.T)
+sns.set(font_scale=0.9)
+# Armamos el mapa de calor
+hm = sns.heatmap(cm, cbar=True, annot=True, square=True, fmt='.2f', annot_kws={'size': 11}, yticklabels=cols.values, xticklabels=cols.values)
+plt.title('Matriz Precio de Venta')
+plt.tight_layout()
+plt.show()</code></pre>
+
+<h4>Así se deberia de ver</h4>
             <img src="Images/CorrSP.png" alt="Mapa de calor">
-        </section>
 
-        <section>
-            <h2>Visualización de Variables</h2>
-            <p>Utilizamos gráficos para explorar la relación entre las variables y el precio de venta:</p>
-            <h3>Área Habitable</h3>
-            <img src="Images/grlivarea.png" alt="Área habitable vs Precio">
-            <h3>Calidad General</h3>
-            <img src="Images/OverallQual.png" alt="Calidad general vs Precio">
-        </section>
 
-        <section>
-            <h2>Transformaciones</h2>
-            <p>Realizamos transformaciones logarítmicas para normalizar variables como <code>SalePrice</code> y <code>GrLivArea</code>:</p>
-            <img src="Images/SalePrice6.png" alt="Transformación de SalePrice">
-        </section>
+
+<h4>Las variables de "Garage" las vemos entre las más correlacionadas, pero el número de autos que caben en garaje es una consecuencia del Área del garaje. Por lo tanto, solo necesitamos una de estas variables en nuestro analísis. Podemos mantener "GarageCars" ya que según el mapa de calor, su correlación es más alta respeto al precio de venta.</h4>
+
+<h4>Sucede lo mismo con la variable de "TotalBsmtSF" y "1stFloor", por lo que mantenemos solo "TotalBsmtSF". Y también lo mismo con "TotRmsAbvGrd" y "GrLivÁrea"</h4>
+
+<h4>FullBath y YearBuilt también se destacan como variables con una correlación significativa con el precio de venta.</h4>
+
+<h4>Por ultimo, haremos un scatterplot usando seaborn de todas las posbiles relaciones que podriamos tener en nuestro dataset con las variables</h4>
+<h5>Declaramos sns.set para tener la visualizacion por defecto</h5>
+<pre><code>sns.set()
+# Definimos las columnas que más nos interesaron, y quitamos las que son hermanas
+cols = ['SalePrice', 'OverallQual', 'GrLivArea', 'GarageCars',
+        'TotalBsmtSF', 'FullBath', 'YearBuilt']
+# Armamos nuestra grafica
+sns.pairplot(df_train[cols], size=2.5)
+plt.title('Correlaciones Precio de Venta')
+plt.tight_layout()
+plt.show()</code></pre>
+
+<h4>Se ve así</h4>
+<img src="Images/CorrSP2.png" alt="">
+<h4>A simple vista notamos que la calidad general y el Área habitable son los factores que más influyen en el precio de venta de las viviendas.</h4>
+
+
+<h4>Por lo tanto, analizaremos las estadísticas descriptivas de la variable que nos interesa, la de precio de venta de la casa y observar como se comportan estas variables.</h4>
+<pre><code>print(df_train["SalePrice"].describe())</code></pre>
+<pre><code>count      1460.000000
+mean     180921.195890
+std       79442.502883
+min       34900.000000
+25%      129975.000000
+50%      163000.000000
+75%      214000.000000
+max      755000.000000
+Name: SalePrice, dtype: float64</code></pre>
+
+<h4>Armaremos una grafica para observar la distribución del precio de venta, lo haremos usando histplot.</h4>
+<pre><code>plt.figure(figsize=(10, 6))  # Tamaño de la figura
+sns.histplot(df_train['SalePrice'], kde=True, color='Blue', bins=30, edgecolor="none")  # Ajusta color y número de bins
+plt.title('Distribucion de SalePrice')
+plt.grid(True)  # Agrega una cuadrícula para una mejor visualización
+plt.tight_layout() # Ajustar los márgenes y el espacio entre las subgráfiacas
+plt.show()</code></pre>
+<img src="Images/SalePrice.png" alt="">
+<h4>Podemos notar que se desvía de la distribución normal</h4>
+<h4>La distribución esta inclinada hacia a la izquierda, lo que significa que hay una cola más larga en el lado derecho. Esto sugiere que hay una mayor cantidad de precios de viviendas que estan por debajo del promedio, y precios muy altos que estan por encima.</h4>
+<h4>Vemos una "altitud" alta, lo que indica que hay una concentración notable de precios de venta en ciertos rangos</h4>
+
+
+<h3>Ahora examinemos una de las variables que tiene mayor impacto en el precio de venta, la cual es el Calidad General, lo haremos con caja de bigotes.</h3>
+<pre><code>var = 'OverallQual'
+data = pd.concat([df_train['SalePrice'], df_train[var]], axis=1)
+# Guaradmos los resultados, y definimos la nueva figura. F y AX es la figura y los ejes 
+f, ax = plt.subplots(figsize=(8, 6))
+# Definimos FIG como una variable donde haremos un sns.boxplot para guardar la grafica
+fig = sns.boxplot(x=var, y="SalePrice", data=data, palette="Set2")
+fig.axis(ymin=0, ymax=800000) #Definimos el eje FIG.AXIS
+plt.title('Distribucion de SalePrice/OverallQual')
+plt.tight_layout()
+plt.grid(True)
+</code></pre>
+
+<h3>Y así queda nuestro grafico de caja de bigotes</h3>
+<img src="Images/OverallQual.png" alt="Caja de bigotes">
+
+<h4>Vemos una relación positiva, esto es evidente por el incremento de las medianas en cada caja.</h4>
+<h4>En los grupos vemos una variabilidad, esto indica que otros factores estan influyendo en el precio.</h4>
+
+
+
+<h3>Continuamos con el área habitable</h3>
+<pre><code>var = 'GrLivArea' # Se declara la variable que contiene el Área vivible
+data = pd.concat([df_train['SalePrice'], df_train[var]], axis=1)# usamos pd.concat para crear una tabla de 2 columnas
+data.plot.scatter(x=var, y='SalePrice', ylim=(0,800000))# Terminamos con un data.plot.scatter para crear la grafica
+plt.title('Distribucion de SalePrice/GrLivarea')
+plt.grid(True)  # Agrega una cuadrícula para mejor visualización
+plt.tight_layout()
+plt.show()</code></pre>
+
+<h3>Así queda la grafica</h3>
+<img src="Images/GrLivarea.png" alt="">
+<h4>Podemos ver una clara relación lineal entre el área habitable y el precio de venta. A medida que el área habitable aumenta, el precio de venta también tiende a aumentar. Esto confirma la hipótesis de que las casas más grandes generalmente se venden a precios más altos</h4>
+<h3>Seguimos con GarageCars</h3>
+<pre><code>var = 'GarageCars'
+data = pd.concat([df_train['SalePrice'], df_train[var]], axis=1)
+# Guaradmos los resultados, y definimos la nueva figura. F y AX es la figura y los ejes 
+f, ax = plt.subplots(figsize=(8, 6))
+# Definimos FIG como una variable donde haremos un sns.boxplot para guardar la grafica
+fig = sns.boxplot(x=var, y="SalePrice", data=data, palette="Set2")
+fig.axis(ymin=0, ymax=800000) #Definimos el eje FIG.AXIS
+plt.title('Distribucion de SalePrice/GarageCars')
+plt.tight_layout()
+plt.grid(True)
+plt.show()</code></pre>
+<img src="Images/GarageCars.png" alt="">
+<h4>El precio de venta, es más alto para las casas con garajes que pueden albergar más coches. Esto refuerza la idea de que las casas con más espacio para garaje son más caras.</h4>
+<h3>Seguimos con el área del sotano</h3>
+<pre><code>var = 'TotalBsmtSF'
+data = pd.concat([df_train['SalePrice'], df_train[var]], axis=1)
+data.plot.scatter(x=var, y='SalePrice', ylim=(0,800000))
+plt.title('Distribucion de SalePrice/TotalBsmtSF')
+plt.grid(True)
+plt.tight_layout()
+plt.show()</code></pre>
+<img src="Images/TotalBsmtSF.png" alt="">
+
+
+</section>
     </main>
     <footer>
-        <p>&copy; 2024 - Proyecto de Análisis Exploratorio</p>
+        <h4>&copy; 2024 - Proyecto de Análisis Exploratorio</h4>
     </footer>
 </body>
 </html>
