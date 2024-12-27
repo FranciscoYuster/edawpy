@@ -64,6 +64,8 @@
             margin: 10px 0;
             padding-left: 20px;
         }
+  
+
     </style>
 </head>
 <body>
@@ -282,6 +284,51 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()</code></pre>
 <img src="Images/TotalBsmtSF.png" alt="">
+<h4>Notamos una tendencia positiva entre las variables. Es decir, a mayor tamaño del sotano, mayor es el precio de venta de la propiedad.</h4>
+<h4>La dispersión de datos indica que aunque hay una tendencia general, existen variaciones. Hay propiedad con sótanos de menor tamaño que se venden por precios altos y viceversa.</h4>
+<h2>Seguimos con Baño completo</h2>
+<pre><code>var = 'FullBath'
+data = pd.concat([df_train['SalePrice'], df_train[var]], axis=1)
+
+plt.figure(figsize=(10, 6))
+sns.boxplot(x=var, y='SalePrice', data=data)
+plt.title('Distribución de SalePrice/FullBath')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<img src="Images/FullBath.png" alt="">
+<h4>Las casas con 3 baños completos muestran tanto precios máximos más altos como una mayor dispersión, lo que podría estar relacionado con factores adicionales.</h4>
+<h2>Ahora haremos exactamente lo mismo pero con la variable de año de construcción</h2>
+
+<pre><code>var = 'YearBuilt'
+data = pd.concat([df_train['SalePrice'], df_train[var]], axis=1)
+f, ax = plt.subplots(figsize=(16, 8))
+palette = sns.color_palette("viridis") 
+fig = sns.boxplot(x=var, y="SalePrice", data=data, palette="PuRd")
+fig.axis(ymin=0, ymax=800000)
+plt.xticks(rotation=90)
+plt.title('Distribucion de SalePrice/YearBuilt')
+plt.tight_layout()
+plt.show()
+</code></pre>
+<h3>Nos queda algo así</h3>
+<img src="Images/YearBuilt.png" alt="">
+<h4>Se ve una tendencia ascendente en los precios de venta a medida que se acerca a la actualidad</h4>
+<h2>Resumiendo</h2>
+<h3>Área habitable y Área total del sotano, tienen una relación lineal con el precio de venta.</h3>
+
+<h3>Las casas con más espacio de garaje tienden a tener precios de venta más altos.</h3>
+<h3>Un mayor tamaño del sótano está correlacionado con un precio de venta más elevado, aunque hay mayor variabilidad en sótanos grandes.</h3>
+<h3>Las casas con baños completos tienen precios más altos</h3>
+<h3>Calidad general y el año de construcción también tienen una relación con el precio de venta, siendo más fuerte la calidad general.</h3>
+
+<h2>Antes de seguir avanzado, sigamos con lo que falta, los datos faltantes.</h2>
+<h3>Dos preguntas importantes que debemos considerar</h3>
+<h3>¿Cuál es la frecuencia de los datos faltantes?</h3>
+<h3>¿Son los datos faltantes aleatorios o tienen un patrón?</h3>
+<h4>Es crucial responder a estas preguntas porque los datos faltantes pueden reducir el tamaño de la muestra y obstaculizar el análisis. Además, debemos garantizar que el manejo de datos faltantes no introduzca sesgos ni oculte información importante.</h4>
 
 
 </section>
