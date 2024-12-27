@@ -329,7 +329,38 @@ plt.show()
 <h3>¿Cuál es la frecuencia de los datos faltantes?</h3>
 <h3>¿Son los datos faltantes aleatorios o tienen un patrón?</h3>
 <h4>Es crucial responder a estas preguntas porque los datos faltantes pueden reducir el tamaño de la muestra y obstaculizar el análisis. Además, debemos garantizar que el manejo de datos faltantes no introduzca sesgos ni oculte información importante.</h4>
+<h3>Datos faltantes</h3>
+<pre><code>total = df_train.isnull().sum().sort_values(ascending=False) # Idenfiticamos las celdas con valores faltantes en el dataframe con "True", y contamos el número total de valores faltantes.
+percent = (df_train.isnull().sum()/df_train.isnull().count()).sort_values(ascending=False) # Dividimos el número de datos faltantes entre el número total de entradas. Esto da como resultado el porcentaje de datos faltantes
+missing_data = pd.concat([total, percent], axis=1, keys=['Total', 'Percent']) # Unimos las dos series en un dataframe, alineando las columnas, y le asignamos los nombres.
+print(missing_data.head(20)) #Mostramos</code></pre>
+<pre><code>              Total   Percent
+PoolQC         1453  0.995205
+MiscFeature    1406  0.963014
+Alley          1369  0.937671
+Fence          1179  0.807534
+másVnrType      872  0.597260
+FireplaceQu     690  0.472603
+LotFrontage     259  0.177397
+GarageQual       81  0.055479
+GarageFinish     81  0.055479
+GarageType       81  0.055479
+GarageYrBlt      81  0.055479
+GarageCond       81  0.055479
+BsmtFinType2     38  0.026027
+BsmtExposure     38  0.026027
+BsmtCond         37  0.025342
+BsmtQual         37  0.025342
+BsmtFinType1     37  0.025342
+másVnrArea        8  0.005479
+Electrical        1  0.000685
+Condition2        0  0.000000</code></pre>
 
+<h4>Si más del 15% de los datos de una variable están ausentes, la eliminamos. Variables como "PoolQC", "MiscFeature" y "Alley" serán descartadas.</h4>
+<h4>Para variables "Garage", que tienen la misma cantidad de datos faltantes en el 5% de los casos, tambièn se eliminarán, ya que la información crucial se encuentra en "GarageCars". Lo mismo aplica con las variables "Bsmt"</h4>
+<h4>"MasVnrÁrea" y "MasVnrType" tienen una alta correlación con "YearBuilt" y "OverallQual", por lo que su eliminación no afecta la calidad del análisis.</h4>
+<h4>Finalmente, con solo una observación faltante en "Electrical", se eliminará esa observación y se mantendrá la variable.</h4>
+<h3>Sabiendo esto, eliminaremos todas las variables con datos faltantes, excepto la variable "Electrical", simplemente eliminaremos la observación con datos faltantes.</h3>
 
 </section>
     </main>
